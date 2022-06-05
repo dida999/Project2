@@ -140,12 +140,11 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\..\..\Downloads\BST (1).h" />
     <ClInclude Include="..\..\..\..\Downloads\TreePrintLibrary (1).h" />
+    <ClInclude Include="BST.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="BST.c" />
-    <ClCompile Include="main.c" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
