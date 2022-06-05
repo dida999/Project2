@@ -14,15 +14,19 @@ return sum;}
 
 void main()
 {
-	BST* bst;
+	BST bst;
 	initBST(&bst);
 	insertBST(&bst, 5);
 	insertBST(&bst,3);
 	insertBST(&bst, 1);
-	insertBST(&bst, 6);
 	insertBST(&bst, 7);
 	insertBST(&bst, 8);
-	/*printTreeInorder(&bst);*/
+	insertBST(&bst, 4);
+	insertBST(&bst, 6);
+	printTreeInorder(&bst);
+	printf("\nthe amount of elements are %d", countElements(bst.root));
+	printf("\nthe index from last is %d ", findIndexNFromLast(&bst,5));
+	printf("\n the sub trees are the same height: %d ", sameHeightLeaves(&bst));
 	/*destroyBST(&bst);*/
 }
 
@@ -130,43 +134,61 @@ int findMaxValueInSubTree(TreeNode* root)
 
 int countElements(TreeNode* root)
 {
-	int sum = 1;
 	if (root == NULL)
 	{
 		return 0;
 	}
-	else {
-		sum += countElements(root->left);
-		sum += countElements(root->right);
-	}
-	return sum;
+	else
+		return 1 + countElements(root->left) + countElements(root->right);
 }
 
 int findIndexNFromLast(BST* bst, int N)
 {
 	int amountOfElements = 0;
-	int amountLeft = 0, amountRight = 0;
-
 	//we will first check that our tree has at least n elements and is not equal to null
-	amountOfElements = countHowManyElements(bst->root);
+	amountOfElements = countElements(bst->root);
 	if (amountOfElements < N)
 	{
-		return INT_MIN;
+		return -1;
 	}
 	return findSubIndexNFromLast(bst->root, N);
 }
 
 int findSubIndexNFromLast(TreeNode* root, int N)
 {
-	int amountRight = countHowManyElements(root->right);
-	if (amountRight == N - 1)
+	int amountRight = countElements(root->right);
+	if (amountRight == N - 1)//if N-1 is the amount on right the index is root
 	{
 		return root->element;
 	}
-	if (amountRight > N - 1)
+	if (amountRight > N - 1) //recursive call searching in right
 	{
 		return findSubIndexNFromLast(root->right, N);
 	}
-	else
+	else//recursive call searching in left
 	{
 		return findSubIndexNFromLast(root->left, N - amountRight - 1);
+	}
+}
+
+int sameSubHeightLeaves(TreeNode* root)
+{
+	if (root == NULL)
+	{
+		return INT_MIN;
+	}
+	// now we will count what is the height of the roots left son and right son
+	int leftHeight = sameSubHeightLeaves(root->left);
+	int rightHeight = sameSubHeightLeaves(root->right);
+	//if they are equal return 1 if they aren't equal return 0  
+	return (rightHeight = leftHeight) ? 1 : 0;
+}
+
+int sameHeightLeaves(BST* bst)
+{
+	return sameSubHeightLeaves(bst->root);
+}
+
+
+
+

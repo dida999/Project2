@@ -25,4 +25,6 @@ int findMaxValueInSubTree(TreeNode* root);
 int findIndexNFromLast(BST* bst, int N);
 int countElements(BST* bst);
 int findSubIndexNFromLast(TreeNode* root, int N);
+int sameHeightLeaves(BST* bst);
+int sameSubHeightLeaves(TreeNode* root);
 #endif // !_BST_ADT_H
